@@ -4,6 +4,7 @@ import { bindActionCreators } from "redux";
 import { handleDrawerVisible } from "./TaskAction";
 import { Drawer } from '../../Components';
 import TaskHeader from './Child/TaskHeader';
+import TaskTable from './Child/TaskTable';
 import './Task.css';
 
 function Task(props) {
@@ -12,6 +13,7 @@ function Task(props) {
         <div>
             <TaskHeader
                 handleDrawerButtonClick={handleDrawerVisible} />
+                <TaskTable/>
             <Drawer
                 visible={drawerVisible}
                 handleDrawer={handleDrawerVisible}
