@@ -1,76 +1,72 @@
 import React from 'react';
 import ReactTable from "react-table";
+import { Button } from "antd";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import "react-table/react-table.css";
+import moment from 'moment';
 
-class TaskTable extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            data: [{
-                name: 'Tanner Linsley',
-                age: 26,
-            },
-            {
-                name: 'Tanner 2',
-                age: 26,
-            }]
-        };
-        this.renderEditable = this.renderEditable.bind(this);
+function TaskTable(props) {
+    const { tasks } = props;
+    function renderEditable(cellInfo) {
+        console.log(cellInfo)
+        return <Button>Edit</Button>
     }
-    renderEditable(cellInfo) {
-        return (
-            <div
-                style={{ backgroundColor: "#fafafa" }}
-                contentEditable
-                suppressContentEditableWarning
-                onBlur={e => {
-                    const data = [...this.state.data];
-                    data[cellInfo.index][cellInfo.column.id] = e.target.innerHTML;
-                    this.setState({ data });
-                }}
-                dangerouslySetInnerHTML={{
-                    __html: this.state.data[cellInfo.index][cellInfo.column.id]
-                }}
+    return (
+        <div>
+            <ReactTable
+                data={tasks}
+                columns={[
+                    {
+                        Header: "No",
+                        accessor: "id",
+                    },
+                    {
+                        Header: "Task Name",
+                        accessor: "taskName",
+                    },
+                    {
+                        Header: "Assigned to",
+                        accessor: "assignedTo",
+                    },
+                    {
+                        Header: "Start date",
+                        accessor: "startDate",
+                    },
+                    {
+                        Header: "End date",
+                        accessor: "endDate",
+                    },
+                    {
+                        Header: "Tags",
+                        accessor: "tags",
+                    },
+                    {
+                        Header: "Followers",
+                        accessor: "followers",
+                    },
+                    {
+                        Header: "Description",
+                        accessor: "description",
+                    },
+                    {
+                        Header: "Action",
+                        // accessor: "id",
+                        Cell: renderEditable
+                    },
+                ]}
+                defaultPageSize={10}
+                className=" -highlight"
             />
-        );
-    }
-    render() {
-        const { data } = this.state;
-        return (
-            <div>
-                <ReactTable
-                    data={data}
-                    columns={[
-                        {
-                            Header: "Name",
-                            accessor: "name",
-                            Cell: this.renderEditable
-                        },
-                        {
-                            Header: "Age",
-                            accessor: "age",
-                            Cell: this.renderEditable
-                        },
-                        // {
-                        //     Header: "Full Name",
-                        //     id: "full",
-                        //     accessor: d =>
-                        //         <div
-                        //             dangerouslySetInnerHTML={{
-                        //                 __html: d.firstName + " " + d.lastName
-                        //             }}
-                        //         />
-                        // }
-                    ]}
-                    defaultPageSize={10}
-                    className="-striped -highlight"
-                />
-                <br />
-                {/* <Tips />
-        <Logo /> */}
-            </div>
-        );
-    }
+        </div>
+    );
 }
 
-export default TaskTable;
+const mapStateToProps = ({ task }) => ({
+    tasks: task.tasks,
+})
+const mapDispatchToProps = dispatch => bindActionCreators({
+
+}, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(TaskTable);
