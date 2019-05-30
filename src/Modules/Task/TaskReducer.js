@@ -23,6 +23,16 @@ const initialState = {
         tags: 26,
         followers: 26,
         description: 26,
+    },
+    {
+        id: 3,
+        taskName: 'Tanner 2',
+        assignedTo: 26,
+        startDate: moment().format('ll'),
+        endDate: moment().format('ll'),
+        tags: 26,
+        followers: 26,
+        description: 26,
     }]
 }
 export const taskReducer = (state = initialState, action) => {
