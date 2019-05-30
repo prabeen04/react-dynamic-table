@@ -1,16 +1,17 @@
 import React from 'react'
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { handleDrawerVisible } from "./TableAction";
+import { handleDrawerVisible } from "./TaskAction";
 import { Drawer } from '../../Components';
-import TableHeader from './Child/TableHeader';
-import './Table.css';
+import TaskHeader from './Child/TaskHeader';
+import './Task.css';
 
-function Table(props) {
+function Task(props) {
     const { drawerVisible, handleDrawerVisible } = props;
     return (
         <div>
-            <TableHeader/>
+            <TaskHeader
+                handleDrawerButtonClick={handleDrawerVisible} />
             <Drawer
                 visible={drawerVisible}
                 handleDrawer={handleDrawerVisible}
@@ -19,11 +20,11 @@ function Table(props) {
     )
 }
 
-const mapStateToProps = ({ table }) => ({
-    drawerVisible: table.drawerVisible,
+const mapStateToProps = ({ task }) => ({
+    drawerVisible: task.drawerVisible,
 })
 const mapDispatchToProps = dispatch => bindActionCreators({
     handleDrawerVisible
 }, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(Table);
+export default connect(mapStateToProps, mapDispatchToProps)(Task);

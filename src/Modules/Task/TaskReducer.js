@@ -1,8 +1,8 @@
-import * as types from './TableActionTypes';
+import * as types from './TaskActionTypes';
 const initialState = {
-    drawerVisible: true,
+    drawerVisible: false,
 }
-export const tableReducer = (state = initialState, action) => {
+export const taskReducer = (state = initialState, action) => {
     switch (action.type) {
         case types.HANDLE_DRAWER_VISIBLE:
             return { ...state, drawerVisible: action.payload }

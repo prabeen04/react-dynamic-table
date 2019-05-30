@@ -8,7 +8,7 @@ export default function AppDrawer(props) {
                 title="Insert"
                 placement="right"
                 closable
-                width={width || 400}
+                width={width || 500}
                 onClose={() => handleDrawer(false)}
                 visible={visible}
                 {...rest}

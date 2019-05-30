@@ -1,11 +1,11 @@
 import React from 'react';
-import Table from './Modules/Table/Table';
+import Task from './Modules/Task/Task';
 import './App.css';
 
 function App() {
   return (
     <>
-      <Table />
+      <Task />
     </>
   );
 }

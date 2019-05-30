@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 /**
- *  All of application reducers import goes here...
+ *  All of the application reducers import goes here...
  */
-import { tableReducer } from "../Modules/Table/TableReducer";
+import { taskReducer } from "../Modules/Task/TaskReducer";
 
 
 const rootReducer = combineReducers({
-  table: tableReducer,
+  task: taskReducer,
 })
 
 export default rootReducer;
