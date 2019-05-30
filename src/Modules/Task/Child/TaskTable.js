@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactTable from "react-table";
-import { Button } from "antd";
+import { Button, Tag } from "antd";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import "react-table/react-table.css";
@@ -11,6 +11,10 @@ function TaskTable(props) {
     function renderEditable(cellInfo) {
         console.log(cellInfo)
         return <Button>Edit</Button>
+    }
+    function renderUsers(cellInfo) {
+        console.log(cellInfo)
+        return <Tag title='user'>
     }
     return (
         <div>
