@@ -1,4 +1,4 @@
-import * as types from './TableActionTypes';
+import * as types from './TaskActionTypes';
 
 /**
  * open close drawer
