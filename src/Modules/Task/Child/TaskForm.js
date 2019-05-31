@@ -3,15 +3,16 @@ import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { Select, Input, DatePicker, Button } from "antd";
 import moment from "moment";
+import { addTask } from "../TaskAction";
 const { TextArea } = Input;
 const { Option } = Select;
 
 function TaskForm(props) {
-    const { users, tags } = props;
+    const { tasks, users, tags, addTask } = props;
     const initialFormState = {
         taskName: '',
         assignedTo: [],
-        startDate: '',
+        startDate: moment().toISOString(),
         endDate: '',
         tags: [],
         followers: [],
@@ -27,7 +28,9 @@ function TaskForm(props) {
     function handleSubmit(e) {
         e.preventDefault()
         console.log(formState)
+        addTask({ ...formState, id: tasks.length + 1 })
     }
+    const disabled = !formState.taskName || !formState.assignedTo.length || !formState.endDate
     return (
         <form onSubmit={handleSubmit}>
             <div className='task-form'>
@@ -55,7 +58,7 @@ function TaskForm(props) {
                     <label>End Date</label>
                     <DatePicker
                         placeholder='Enter Task End Date'
-                        onChange={() => { }} />
+                        onChange={(e) => setFormState({ ...formState, endDate: moment(e).toISOString() })} />
                 </div>
                 <div className='form-group'>
                     <label>Tags</label>
@@ -91,6 +94,8 @@ function TaskForm(props) {
                 <Button
                     type='primary'
                     htmlType='submit'
+                    icon='save'
+                    disabled={disabled}
                     style={{ float: 'right' }}
                 >Save</Button>
             </div>
@@ -99,8 +104,9 @@ function TaskForm(props) {
 }
 
 const mapStateToProps = ({ task }) => ({
+    tasks: task.tasks,
     users: task.users,
     tags: task.tags,
 })
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({ addTask }, dispatch)
 export default connect(mapStateToProps, mapDispatchToProps)(TaskForm);

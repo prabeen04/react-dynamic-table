@@ -8,6 +8,7 @@ export default function AppDrawer(props) {
                 title="Add Data"
                 placement="right"
                 closable
+                destroyOnClose
                 width={width || 500}
                 onClose={() => handleDrawer(false)}
                 visible={visible}
