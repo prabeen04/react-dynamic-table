@@ -14,7 +14,7 @@ function TaskTable(props) {
     }
     function renderUsers(cellInfo) {
         console.log(cellInfo)
-        return <Tag title='user'>
+        return <Tag closable  color="blue">Prabeen</Tag>
     }
     return (
         <div>
@@ -32,6 +32,7 @@ function TaskTable(props) {
                     {
                         Header: "Assigned to",
                         accessor: "assignedTo",
+                        Cell: renderUsers,
                     },
                     {
                         Header: "Start date",

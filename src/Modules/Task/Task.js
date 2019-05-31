@@ -5,6 +5,7 @@ import { handleDrawerVisible } from "./TaskAction";
 import { Drawer } from '../../Components';
 import TaskHeader from './Child/TaskHeader';
 import TaskTable from './Child/TaskTable';
+import TaskForm from './Child/TaskForm';
 import './Task.css';
 
 function Task(props) {
@@ -17,7 +18,9 @@ function Task(props) {
             <Drawer
                 visible={drawerVisible}
                 handleDrawer={handleDrawerVisible}
-            />
+            >
+                <TaskForm/>
+            </Drawer>
         </div>
     )
 }

@@ -3,7 +3,8 @@ import moment from 'moment';
 
 const initialState = {
     drawerVisible: false,
-    users: ['abc', 'def', 'ghi'],
+    users: ['Tony', 'Paul', 'Amit', 'Ajay'],
+    tags: ['Tag1', 'Tag2', 'Tag3', 'Tag4', 'Tag5', 'Tag6', 'Tag7'],
     tasks: [{
         id: 1,
         taskName: 'Tanner Linsley',
@@ -39,6 +40,8 @@ export const taskReducer = (state = initialState, action) => {
     switch (action.type) {
         case types.HANDLE_DRAWER_VISIBLE:
             return { ...state, drawerVisible: action.payload }
+        case types.ADD_TASK:
+            return { ...state, tasks: [...state.tasks, action.payload] }
         default:
             return state;
     }

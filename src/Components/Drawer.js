@@ -5,7 +5,7 @@ export default function AppDrawer(props) {
     return (
         <>
             <Drawer
-                title="Insert"
+                title="Add Data"
                 placement="right"
                 closable
                 width={width || 500}
