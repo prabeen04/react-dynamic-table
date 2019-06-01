@@ -45,7 +45,7 @@ export const taskReducer = (state = initialState, action) => {
         case types.RENAME_TASK_NAME:
             return {
                 ...state,
-                tasks: tasks.map((task) => task.id === action.payload.id
+                tasks: state.tasks.map((task) => task.id === action.payload.id
                     ? { ...task, taskName: action.payload.taskName }
                     : task)
             }

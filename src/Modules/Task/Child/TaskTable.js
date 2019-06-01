@@ -3,35 +3,16 @@ import ReactTable from "react-table";
 import { Button, Tag, Popover, Input } from "antd";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import "react-table/react-table.css";
+import { renameTaskName } from "../TaskAction";
 import moment from 'moment';
+import "react-table/react-table.css";
 
 function TaskTable(props) {
-    const { tasks } = props;
+    const { tasks, renameTaskName } = props;
     const [newTask, setNewTask] = useState('')
+    const [popoverVisible, setPopoverVisible] = useState(false)
 
-    function MyPopover(props) {
-        return (<Popover placement="left" content={<Content />} trigger="click">
-            {props.children}
-        </Popover>)
-    }
 
-    function Content(props) {
-        return (<div style={{ display: 'flex' }}>
-            <Input
-                placeholder='Enter Task'
-                value={newTask}
-                onChange={(e) => setNewTask(e.target.value)}
-            />&nbsp;
-                <Button type='primary'>Save</Button>
-        </div>)
-    }
-    function renderEditable(cellInfo) {
-        console.log(cellInfo)
-        return (<MyPopover>
-            <Button type='link'>Edit</Button>
-        </MyPopover>)
-    }
     function renderUsers(cellInfo) {
         if (cellInfo.original.assignedTo.length <= 2) {
             return cellInfo.original.assignedTo.map((user, i) => <Tag key={i} color="blue">{user}</Tag>)
@@ -60,7 +41,6 @@ function TaskTable(props) {
     }
     return (
         <div>
-            <MyPopover />
             <ReactTable
                 data={tasks}
                 columns={[
@@ -104,7 +84,11 @@ function TaskTable(props) {
                     {
                         Header: "Action",
                         // accessor: "id",
-                        Cell: renderEditable
+                        width: 300,
+                        Cell: (cellProps) => (
+
+                            <EditableAction {...cellProps} newTask={newTask} setNewTask={setNewTask} renameTaskName={renameTaskName} />
+                        )
                     },
                 ]}
                 defaultPageSize={10}
@@ -118,7 +102,51 @@ const mapStateToProps = ({ task }) => ({
     tasks: task.tasks,
 })
 const mapDispatchToProps = dispatch => bindActionCreators({
-
+    renameTaskName
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(TaskTable);
+
+function EditableAction(props) {
+    const [popoverVisible, setPopoverVisible] = useState(false)
+    const [newTask, setNewTask] = useState('')
+
+    function Content() {
+        return (<div style={{ display: 'flex' }}>
+            <Input
+                placeholder='Enter Task'
+                value={newTask}
+                onChange={(e) => setNewTask(e.target.value)}
+            />&nbsp;
+                <Button
+                type='primary'
+                onClick={() => setPopoverVisible(false)}
+            >
+                Save</Button>
+                <Button
+                onClick={() => setPopoverVisible(false)}
+            >
+                Cancel</Button>
+        </div>)
+    }
+    return (
+        <div>
+            {/* 
+            <Popover
+                visible={popoverVisible}
+                placement="left"
+                content={<Content />}
+            // trigger="click"
+            > */}
+            {!popoverVisible
+                ? <Button
+                    type='link'
+                    onClick={() => setPopoverVisible(true)}
+                >Edit</Button>
+                : <Content />
+            }
+            {/* </Popover> */}
+        </div>
+    )
+}
+
