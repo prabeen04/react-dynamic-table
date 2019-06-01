@@ -18,7 +18,10 @@ export const addTask = task => dispatch => dispatch({
 /**
  * rename task name of a task
  */
-export const renameTaskName = (id, taskName) => dispatch => dispatch({
-    type: types.RENAME_TASK_NAME,
-    payload: { id, taskName }
-})
+export const renameTaskName = (id, taskName) => dispatch => {
+    console.log(id, taskName)
+    return dispatch({
+        type: types.RENAME_TASK_NAME,
+        payload: { id, taskName }
+    })
+}

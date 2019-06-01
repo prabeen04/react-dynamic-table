@@ -5,13 +5,11 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { renameTaskName } from "../TaskAction";
 import moment from 'moment';
+import EditTaskAction from './EditTaskAction';
 import "react-table/react-table.css";
 
 function TaskTable(props) {
     const { tasks, renameTaskName } = props;
-    const [newTask, setNewTask] = useState('')
-    const [popoverVisible, setPopoverVisible] = useState(false)
-
 
     function renderUsers(cellInfo) {
         if (cellInfo.original.assignedTo.length <= 2) {
@@ -47,6 +45,7 @@ function TaskTable(props) {
                     {
                         Header: "No",
                         accessor: "id",
+                        width: 50
                     },
                     {
                         Header: "Task Name",
@@ -83,15 +82,11 @@ function TaskTable(props) {
                     },
                     {
                         Header: "Action",
-                        // accessor: "id",
-                        width: 300,
-                        Cell: (cellProps) => (
-
-                            <EditableAction {...cellProps} newTask={newTask} setNewTask={setNewTask} renameTaskName={renameTaskName} />
-                        )
+                        width: 250,
+                        Cell: (cellProps) => <EditTaskAction {...cellProps} renameTaskName={renameTaskName} />
                     },
                 ]}
-                defaultPageSize={10}
+                defaultPageSize={5}
                 className=" -highlight"
             />
         </div>
@@ -106,47 +101,3 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(TaskTable);
-
-function EditableAction(props) {
-    const [popoverVisible, setPopoverVisible] = useState(false)
-    const [newTask, setNewTask] = useState('')
-
-    function Content() {
-        return (<div style={{ display: 'flex' }}>
-            <Input
-                placeholder='Enter Task'
-                value={newTask}
-                onChange={(e) => setNewTask(e.target.value)}
-            />&nbsp;
-                <Button
-                type='primary'
-                onClick={() => setPopoverVisible(false)}
-            >
-                Save</Button>
-                <Button
-                onClick={() => setPopoverVisible(false)}
-            >
-                Cancel</Button>
-        </div>)
-    }
-    return (
-        <div>
-            {/* 
-            <Popover
-                visible={popoverVisible}
-                placement="left"
-                content={<Content />}
-            // trigger="click"
-            > */}
-            {!popoverVisible
-                ? <Button
-                    type='link'
-                    onClick={() => setPopoverVisible(true)}
-                >Edit</Button>
-                : <Content />
-            }
-            {/* </Popover> */}
-        </div>
-    )
-}
-
